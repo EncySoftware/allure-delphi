@@ -4,11 +4,12 @@
 *.drc
 *.local
 *.res
-/bin/
 *.~*
 *.tvsconfig
 *.stat
 *.res
+bin
+obj
 
 # Build system
 .stbuild/.nuke/temp
