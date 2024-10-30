@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Build system",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build STBuild.csproj",
+            "program": "${workspaceFolder}/.stbuild/build/bin/stbuild.exe",
+            "args": [
+                "--target Compile"
+            ],
+            "cwd": "${workspaceFolder}/.stbuild",
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        }
+    ]
+}

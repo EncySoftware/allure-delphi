@@ -1,0 +1,55 @@
+{
+	"project_path": "../AllureDelphi.dproj",
+	"type": "Delphi",
+	"sources": [
+		"./*.json",
+		"$native_project:sources$"
+	],
+
+	"title": "$env:package_namespace$ $native_project:name$.dll",
+	"description": "Allure integrations for Delphi test frameworks",
+	"authors": ["$env:package_namespace$"],
+	"owners": ["$env:package_namespace$"],
+	"language": "en-US",
+	"version": "$env:package_major_version$.0",
+	"project_url": "$env:package_project_url$",
+	"copyright": "$env:package_copyright$",
+
+	"dependencies": [ 
+		{ 
+			"NativeDependencies": { 
+				"is_visible": false
+			}
+		} 
+	],
+
+	"packages": [
+		{
+			"class": "Nuget",
+			"id": "$env:package_namespace$.$native_project:name$.x64",
+			"variant_files": {
+				"Release_x64": [ {
+					"condition": "'$(Platform)' != 'x86'",
+					"files": {
+						"$project:output_dll$/$native_project:name$.stbuildresult.json": "stbuild",
+						"$project:output_dll$/$native_project:name$.dll": "build"
+					}
+				} ]
+			}
+		},
+		{
+			"class": "Nuget",
+			"id": "$env:package_namespace$.$native_project:name$.x32",
+			"variant_files": {
+				"Release_x32": [ {
+					"condition": "'$(Platform)' == 'x86'",
+					"files": {
+						"$project:output_dll$/$native_project:name$.stbuildresult.json": "stbuild",
+						"$project:output_dll$/$native_project:name$.dll": "build"
+					}
+				} ]
+			}
+		}
+	]
+
+}

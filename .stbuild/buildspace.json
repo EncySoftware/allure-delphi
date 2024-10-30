@@ -1,0 +1,13 @@
+{
+	"vars": {
+		"package_namespace": "EncySoftware",
+		"package_major_version": "1",
+		"package_copyright": "Copyright (c) 2024 Ency Software Ltd. All rights reserved.",
+		"package_project_url": "https://encycam.com/"
+	},
+
+	"projects": [
+		"../allure-DUnitX/main/.stbuild/AllureDUnitXProject.json",
+		"../allure-delphi/main/.stbuild/AllureDelphiProject.json"
+	]
+}
