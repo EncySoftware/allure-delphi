@@ -37,8 +37,8 @@ requires
 contains
   allureDelphiHelper in '..\..\allure-delphi\main\src\allureDelphiHelper.pas',
   allureDelphiInterface in '..\..\allure-delphi\main\src\allureDelphiInterface.pas',
-  allureAttributes in '..\..\allure-DUnitX\src\allureAttributes.pas',
-  allureDUnitXLogger in '..\..\allure-DUnitX\src\allureDUnitXLogger.pas',
-  MethodsInterceptor in '..\..\allure-DUnitX\src\MethodsInterceptor.pas';
+  allureAttributes in '..\src\allureAttributes.pas',
+  allureDUnitXLogger in '..\src\allureDUnitXLogger.pas',
+  MethodsInterceptor in '..\src\MethodsInterceptor.pas';
 
 end.
