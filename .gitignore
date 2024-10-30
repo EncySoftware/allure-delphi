@@ -1,0 +1,17 @@
+*.dcu
+*.identcache
+*.dsk
+*.drc
+*.local
+*.res
+/bin/
+*.~*
+*.tvsconfig
+*.stat
+*.res
+
+# Build system
+.stbuild/.nuke/temp
+.stbuild/temp
+.stbuild/hash
+.stbuild/buildspace.local.json
