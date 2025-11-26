@@ -4,7 +4,7 @@ interface
 
 uses
   DUnitX.TestFramework, allureDelphiHelper, allureDelphiInterface,
-  System.SysUtils, allureAttributes, Winapi.ShellApi;
+  System.SysUtils, allureAttributes{$IFDEF MSWINDOWS}, Winapi.ShellApi{$ENDIF};
 
 type
 
@@ -123,7 +123,9 @@ begin
       'Just some long text' + #13#10 +
       'Just some long text' + #13#10
   );
+  {$IFDEF MSWINDOWS}
   Allure.AddScreenshot('Desktop');
+  {$ENDIF}
 end;
 
 procedure TAllureDUnitXLoggerTests.ShouldBeBroken;
