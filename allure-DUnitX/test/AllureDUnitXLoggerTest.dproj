@@ -132,7 +132,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Linux64)'!=''">
         <DCC_Namespace>Winapi;$(DCC_Namespace)</DCC_Namespace>
-        <DCC_UnitSearchPath>..\..\..\SprutCAM\SprutCAM40\EXE\$(Platform);..\..\..\SprutCAM\SprutCAM40\EXE\$(Platform)\dcu;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\bin\$(Platform);..\..\bin\$(Platform)\dcu;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_LinkerOptions>-lntdll -lkernelbase -lkernel32 -luser32 -lgdi32 -ladvapi32 -lwinex11.drv -limm32 -lrpcrt4 -lsetupapi -lcomctl32 </DCC_LinkerOptions>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_OSX64)'!=''">
@@ -236,109 +236,109 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx64\libcgsqlite3.dylib" Class="DependencyModule"/>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libadvapi32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libadvapi32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libadvapi32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libcomctl32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libcomctl32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libcomctl32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libgdi32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libgdi32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libgdi32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libglu32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libglu32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libglu32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libimm32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libimm32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libimm32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libkernel32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libkernel32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libkernel32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libkernelbase.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libkernelbase.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libkernelbase.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libntdll.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libntdll.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libntdll.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libole32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libole32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libole32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libopengl32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libopengl32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libopengl32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\librpcrt4.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\librpcrt4.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>librpcrt4.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libsetupapi.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libsetupapi.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libsetupapi.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libshell32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libshell32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libshell32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libuser32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libuser32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libuser32.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libwine.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libwine.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libwine.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libwinex11.drv.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libwinex11.drv.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libwinex11.drv.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libwinmmtime.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libwinmmtime.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libwinmmtime.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\..\SprutCAM\SprutCAM40\EXE\Linux64\libws2_32.so" Configuration="Debug" Class="File">
+                <DeployFile LocalName="..\..\bin\Linux64\libws2_32.so" Configuration="Debug" Class="File">
                     <Platform Name="Linux64">
                         <RemoteName>libws2_32.so</RemoteName>
                         <Overwrite>true</Overwrite>
