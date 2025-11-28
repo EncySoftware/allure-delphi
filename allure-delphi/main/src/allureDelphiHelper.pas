@@ -4,8 +4,13 @@ interface
 
 uses
   allureDelphiInterface, Winapi.Windows, System.SysUtils, System.DateUtils,
-  System.Hash, Winapi.ActiveX, Winapi.ShellApi, Vcl.Graphics,
-  Vcl.Imaging.pngimage, System.Classes;
+  System.Hash,
+  {$IFDEF MSWINDOWS}
+  Winapi.ActiveX, Winapi.ShellApi, Vcl.Graphics, Vcl.Imaging.pngimage,
+  {$ELSE MSWINDOWS}
+  System.Types, Vcl.Compat,
+  {$ENDIF MSWINDOWS}
+  System.Classes;
 
 type
 
@@ -100,6 +105,7 @@ type
     procedure AddAttachment(const Name, AType: String; const Content: TBytes; const FileExtension: String = ''); overload;
     procedure AddAttachment(const Path: String; const Name: String = ''); overload;
     procedure AddAttachmentText(const Name, AValue: String);
+    {$IFDEF MSWINDOWS}
     procedure AddScreenshot(
       const Name: String = '';
       WindowHandle: HWND = 0;
@@ -107,6 +113,7 @@ type
       Top: Integer = -1000000;
       Width: Integer = -1000000;
       Height: Integer = -1000000);
+    {$ENDIF MSWINDOWS}
 
   end;
 
@@ -156,6 +163,7 @@ begin
     AddAttachment(Name, TMimeTypesMap.PlainText, TEncoding.UTF8.GetBytes(AValue));
 end;
 
+{$IFDEF MSWINDOWS}
 procedure TAllureHelper.AddScreenshot(const Name: String;
   WindowHandle: HWND; Left, Top, Width, Height: Integer);
 var
@@ -203,6 +211,7 @@ begin
     png.Free;
   end;
 end;
+{$ENDIF MSWINDOWS}
 
 procedure TAllureHelper.AssignStepHandler(StepHandler: TAllureStepHandler);
 begin
@@ -254,14 +263,30 @@ begin
     if ReportDir<>'' then begin
       // To specified folder
       p := 'generate --clean --output "' + ReportDir + '" "' + resDir + '"';
+      {$IFDEF MSWINDOWS}
       ShellExecute(0, 'open', 'allure', PChar(p), nil, 1);
       sleep(5000);
+      {$ELSE MSWINDOWS}
+      { LINUX_TODO: popen }
+      WriteLn('TAllureHelper.GenerateReport(): allure ' + p);
+      {$ENDIF MSWINDOWS}
+
       p := 'open "' + ReportDir + '"';
+      {$IFDEF MSWINDOWS}
       ShellExecute(0, 'open', 'allure', PChar(p), nil, 1);
+      {$ELSE MSWINDOWS}
+      { LINUX_TODO: popen }
+      WriteLn('TAllureHelper.GenerateReport(): allure ' + p);
+      {$ENDIF MSWINDOWS}
     end else begin
       // To temp folder
       p := 'serve "' + resDir + '"';
+      {$IFDEF MSWINDOWS}
       ShellExecute(0, 'open', 'allure', PChar(p), nil, 1);
+      {$ELSE MSWINDOWS}
+      { LINUX_TODO: popen }
+      WriteLn('TAllureHelper.GenerateReport(): allure ' + p);
+      {$ENDIF MSWINDOWS}
     end;
   end;
 end;
@@ -280,7 +305,7 @@ begin
   try
     if Allure.fLifecycle<>nil then exit;
     Allure.fLifecycle := nil;
-    Allure.fDllHandle := LoadLibrary('AllureDelphi.dll');
+    Allure.fDllHandle := Winapi.Windows.LoadLibrary({$IFDEF MSWINDOWS}'AllureDelphi.dll'{$ELSE}'libAllureDelphi.so'{$ENDIF});
     if Allure.fDllHandle<>0 then begin
       GetLifecycleFunc := GetProcAddress(Allure.fDllHandle, 'GetAllureLifecycle');
       if Assigned(GetLifecycleFunc) then begin

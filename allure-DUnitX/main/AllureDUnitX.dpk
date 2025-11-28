@@ -30,8 +30,12 @@ package AllureDUnitX;
 
 requires
   rtl,
+  {$IFDEF MSWINDOWS}
   vcl,
   vclimg,
+  {$ELSE MSWINDOWS}
+  WineRtl,
+  {$ENDIF MSWINDOWS}
   DUnitXRuntime;
 
 contains

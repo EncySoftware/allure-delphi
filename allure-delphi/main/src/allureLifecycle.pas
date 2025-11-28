@@ -5,8 +5,9 @@ interface
 uses
   System.SysUtils, Winapi.Windows, allureDelphiInterface, allureCommon,
   allureConfig, System.IOUtils, allureModel, allureThreadSafelist,
-  allureDelphiHelper, allureFileSystemResultsWriter, Winapi.ActiveX,
-  System.Classes, Vcl.AxCtrls;
+  allureDelphiHelper, allureFileSystemResultsWriter,
+  {$IFDEF MSWINDOWS}Winapi.ActiveX{$ELSE}System.Types{$ENDIF},
+  System.Classes{$IFDEF MSWINDOWS}, Vcl.AxCtrls{$ENDIF};
 
 type
 
@@ -274,7 +275,7 @@ begin
   source := PrepareAttachment(Name, AType, ExtractFileExt(Path));
   if source<>'' then begin
     try
-      s := TFileStream.Create(Path, fmShareDenyNone, fmShareCompat);
+      s := TFileStream.Create(Path, fmShareDenyNone{$IFDEF MSWINDOWS}, fmShareCompat{$ENDIF});
       try
         Writer.WriteAttachment(source, s);
       finally
@@ -327,18 +328,20 @@ function TAllureLifecycle.AddAttachment(const Name, AType,
   FileExtension: TAllureString; const Stream: IStream): IAllureLifecycle;
 var
   source: TAllureString;
-  s: TOleStream;
+  s: {$IFDEF MSWINDOWS}TOleStream{$ELSE}TStream{$ENDIF};
 begin
   result := self;
   if Stream=nil then exit;
   source := PrepareAttachment(Name, AType, FileExtension);
   if source<>'' then begin
     try
-      s := TOleStream.Create(Stream);
+      s := {$IFDEF MSWINDOWS}TOleStream.Create(Stream){$ELSE}TStream(Stream){$ENDIF};
       try
         Writer.WriteAttachment(source, s);
       finally
+        {$IFDEF MSWINDOWS}
         s.Free;
+        {$ENDIF}
       end;
     except
     end;

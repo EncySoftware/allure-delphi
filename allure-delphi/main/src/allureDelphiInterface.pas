@@ -3,7 +3,7 @@ unit allureDelphiInterface;
 interface
 
 uses
-  Winapi.ActiveX;
+  {$IFDEF MSWINDOWS}Winapi.ActiveX{$ELSE}System.Types{$ENDIF};
 
 type
 
