@@ -3,7 +3,8 @@ unit allureConfig;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows, allureDelphiInterface, allureCommon,
+  {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
+  System.SysUtils, allureDelphiInterface, allureCommon,
   System.JSON, System.IOUtils, System.Generics.Collections, allureModel;
 
 type

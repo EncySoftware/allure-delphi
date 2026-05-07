@@ -3,11 +3,15 @@ unit allureLifecycle;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows, allureDelphiInterface, allureCommon,
+  System.SysUtils, allureDelphiInterface, allureCommon,
   allureConfig, System.IOUtils, allureModel, allureThreadSafelist,
   allureDelphiHelper, allureFileSystemResultsWriter,
-  {$IFDEF MSWINDOWS}Winapi.ActiveX{$ELSE}System.Types{$ENDIF},
-  System.Classes{$IFDEF MSWINDOWS}, Vcl.AxCtrls{$ENDIF};
+  {$IFDEF MSWINDOWS}
+  Winapi.Windows, Winapi.ActiveX, Vcl.AxCtrls,
+  {$ELSE}
+  System.Types,
+  {$ENDIF}
+  System.Classes;
 
 type
 
@@ -275,7 +279,7 @@ begin
   source := PrepareAttachment(Name, AType, ExtractFileExt(Path));
   if source<>'' then begin
     try
-      s := TFileStream.Create(Path, fmShareDenyNone{$IFDEF MSWINDOWS}, fmShareCompat{$ENDIF});
+      s := TFileStream.Create(Path, fmShareDenyNone, {$IFDEF MSWINDOWS}fmShareCompat{$ELSE}FileAccessRights{$ENDIF});
       try
         Writer.WriteAttachment(source, s);
       finally
@@ -452,7 +456,7 @@ end;
 
 function TAllureLifecycle.Environment: IAllureEnvironment;
 begin
-  result := TAllureEnvironment.Create(ResultsDirectory + '\environment.properties');
+  result := TAllureEnvironment.Create(TPath.Combine(ResultsDirectory, 'environment.properties'));
 end;
 
 class procedure TAllureLifecycle.FreeLifecycle;

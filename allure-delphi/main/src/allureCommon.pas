@@ -3,7 +3,8 @@ unit allureCommon;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows, System.Classes;
+  {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
+  System.SysUtils, System.SyncObjs, System.Classes;
 
 const
   ALLURE_CONFIG_ENV_VARIABLE: string = 'ALLURE_CONFIG';
@@ -91,7 +92,7 @@ end;
 procedure TAllureInterfacedObject.BeforeDestruction;
 begin
   if fSelfIncrement then
-    InterlockedDecrement(fRefCount);  // Remove my own reference
+    AtomicDecrement(fRefCount);  // Remove my own reference
   inherited;
 end;
 
@@ -128,7 +129,7 @@ begin
   if fSelfIncrement then
     _AddRef                           // Add my own reference
   else
-    InterlockedDecrement(fRefCount);  // Remove my own reference
+    AtomicDecrement(fRefCount);  // Remove my own reference
 end;
 
 function TAllureInterfacedObject._AddRef: Integer;

@@ -119,13 +119,16 @@ end;
 procedure TAllureDelphiTests.ShouldAddAttachments;
 const
   attachemnt1Content: AnsiString = 'This is a some text to check it attached to the test';
-  attachemnt2File: string = '\..\..\..\TestData\allureConfig.json';
-  attachemnt3File: string = '\..\..\..\TestData\WeldingBox.png';
 var
+  attachemnt2File: string;
+  attachemnt3File: string;
   test: IAllureTestResult;
   fn, txt: string;
   jv, v: TJSONValue;
 begin
+  attachemnt2File := TPath.Combine('..', '..', 'TestData', 'allureConfig.json');
+  attachemnt3File := TPath.Combine('..', '..', 'TestData', 'WeldingBox.png');
+
   Assert.IsNotNull(Allure.Lifecycle);
   test := Allure.Lifecycle.CreateTestResult;
   Assert.IsNotNull(test);
@@ -139,15 +142,15 @@ begin
 
   Allure.Lifecycle.AddAttachment('attachment1',
     TMimeTypesMap.PlainText, @attachemnt1Content[1], SizeOf(attachemnt1Content[1])*Length(attachemnt1Content));
-  fn := ExtractFileDir(GetModuleName(HInstance)) + attachemnt2File;
+  fn := ExtractFileDir(GetModuleName(HInstance)) + PathDelim + attachemnt2File;
   Allure.Lifecycle.AddAttachment(fn);
-  fn := ExtractFileDir(GetModuleName(HInstance)) + attachemnt3File;
+  fn := ExtractFileDir(GetModuleName(HInstance)) + PathDelim + attachemnt3File;
   Allure.Lifecycle.AddAttachment(fn);
 
   Allure.Lifecycle.StopTestCase(test.UUID);
   Allure.Lifecycle.WriteTestCase(test.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + test.UUID + '-result.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + test.UUID + '-result.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -160,19 +163,19 @@ begin
       Assert.AreEqual(test.Name, v.Value, true);
       v := jv.FindValue('attachments[0].source');
       Assert.IsNotNull(v);
-      fn := Allure.Lifecycle.ResultsDirectory + '\' + v.Value;
+      fn := Allure.Lifecycle.ResultsDirectory + PathDelim + v.Value;
       if not FileExists(fn) then
         Assert.Fail('Attachment 1 file not created');
       txt := TFile.ReadAllText(fn);
       Assert.AreEqual(UnicodeString(attachemnt1Content), txt, true);
       v := jv.FindValue('attachments[1].source');
       Assert.IsNotNull(v);
-      fn := Allure.Lifecycle.ResultsDirectory + '\' + v.Value;
+      fn := Allure.Lifecycle.ResultsDirectory + PathDelim + v.Value;
       if not FileExists(fn) then
         Assert.Fail('Attachment 2 file not created');
       v := jv.FindValue('attachments[2].source');
       Assert.IsNotNull(v);
-      fn := Allure.Lifecycle.ResultsDirectory + '\' + v.Value;
+      fn := Allure.Lifecycle.ResultsDirectory + PathDelim + v.Value;
       if not FileExists(fn) then
         Assert.Fail('Attachment 3 file not created');
     finally
@@ -207,7 +210,7 @@ begin
   Allure.Lifecycle.StopTestCase(res.UUID);
   Allure.Lifecycle.WriteTestCase(res.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + res.UUID + '-result.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + res.UUID + '-result.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -264,7 +267,7 @@ begin
   Allure.Lifecycle.StopTestContainer(pc.UUID);
   Allure.Lifecycle.WriteTestContainer(pc.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + pc.UUID + '-container.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + pc.UUID + '-container.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -283,7 +286,7 @@ begin
     end;
   end else
     Assert.Fail('Parent test result container not created');
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + c.UUID + '-container.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + c.UUID + '-container.json';
   if not FileExists(fn) then
     Assert.Fail('Child test result container not created');
 end;
@@ -324,7 +327,7 @@ begin
   Allure.Lifecycle.StopTestCase(test.UUID);
   Allure.Lifecycle.WriteTestCase(test.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + test.UUID + '-result.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + test.UUID + '-result.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -363,7 +366,7 @@ begin
   Allure.Lifecycle.StopTestContainer(c.UUID);
   Allure.Lifecycle.WriteTestContainer(c.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + c.UUID + '-container.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + c.UUID + '-container.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -433,7 +436,7 @@ begin
   Allure.Lifecycle.StopTestContainer(container.UUID);
   Allure.Lifecycle.WriteTestContainer(container.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + container.UUID + '-container.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + container.UUID + '-container.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -478,7 +481,7 @@ begin
   lf := nil;
   try
     lf := Allure.Lifecycle;
-    fn := ExtractFilePath(GetModuleName(HInstance)) + '..\..\..\TestData\allureConfig.json';
+    fn := ExtractFilePath(GetModuleName(HInstance)) + TPath.Combine(['..', '..', 'TestData', 'allureConfig.json']);
     if not FileExists(fn) then
       Assert.Fail('Missing config file: ' + fn);
     Assert.IsNotNull(lf);
@@ -525,7 +528,7 @@ begin
   Allure.Lifecycle.StopTestContainer(c.UUID);
   Allure.Lifecycle.WriteTestContainer(c.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + c.UUID + '-container.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + c.UUID + '-container.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
@@ -589,7 +592,7 @@ begin
   Allure.Lifecycle.StopTestCase(res.UUID);
   Allure.Lifecycle.WriteTestCase(res.UUID);
 
-  fn := Allure.Lifecycle.ResultsDirectory + '\' + res.UUID + '-result.json';
+  fn := Allure.Lifecycle.ResultsDirectory + PathDelim + res.UUID + '-result.json';
   if FileExists(fn) then begin
     jv := TJSONObject.ParseJSONValue(TFile.ReadAllText(fn), False, True);
     try
