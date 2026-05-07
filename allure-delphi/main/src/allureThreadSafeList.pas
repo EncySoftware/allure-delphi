@@ -3,8 +3,9 @@ unit allureThreadSafeList;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
   System.SysUtils, System.Generics.Defaults, System.Generics.Collections,
-  allureCommon, System.Classes, Winapi.Windows;
+  allureCommon, System.Classes;
 
 type
 
@@ -294,7 +295,7 @@ begin
   result := nil;
   Lock;
   try
-    ctid := GetCurrentThreadId;
+    ctid := TThread.CurrentThread.ThreadID;
     for i := 0 to High(fThreads) do begin
       tr := fThreads[i];
       if tr.ThreadID=ctid then begin

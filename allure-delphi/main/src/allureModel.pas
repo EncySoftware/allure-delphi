@@ -3,7 +3,12 @@ unit allureModel;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows, allureDelphiInterface, allureCommon,
+  {$IFDEF MSWINDOWS}
+  Winapi.Windows,
+  {$ELSE}
+  Posix.Unistd,
+  {$ENDIF}
+  System.SysUtils, allureDelphiInterface, allureCommon,
   allureThreadSafeList, System.Generics.Defaults, System.Classes,
   allureDelphiHelper, System.StrUtils;
 
@@ -1166,8 +1171,16 @@ procedure TAllureLabel.SetCurrentHost;
   begin
     dwLength := 253;
     SetLength(Result, dwLength+1);
+    {$IFDEF MSWINDOWS}
     if not WinApi.Windows.GetComputerName(pchar(result), dwLength) then
       Result := 'Not detected!';
+    {$ELSE}
+    var Buffer: array[0..253] of Byte;
+    if gethostname(@Buffer[0], dwLength) = 0 then
+      Result := UTF8ToString(MarshaledAString(@Buffer[0]))
+    else
+      Result := 'Not detected!';
+    {$ENDIF}
     Result := pchar(result);
   end;
 
@@ -1177,7 +1190,7 @@ end;
 
 procedure TAllureLabel.SetCurrentThread;
 begin
-  SetThread(IntToStr(GetCurrentThreadId));
+  SetThread(IntToStr(TThread.CurrentThread.ThreadID));
 end;
 
 procedure TAllureLabel.SetEpic(const AValue: TAllureString);

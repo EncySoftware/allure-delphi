@@ -3,12 +3,12 @@
 interface
 
 uses
-  allureDelphiInterface, Winapi.Windows, System.SysUtils, System.DateUtils,
+  allureDelphiInterface, System.SysUtils, System.DateUtils,
   System.Hash,
   {$IFDEF MSWINDOWS}
-  Winapi.ActiveX, Winapi.ShellApi, Vcl.Graphics, Vcl.Imaging.pngimage,
+  Winapi.Windows, Winapi.ActiveX, Winapi.ShellApi, Vcl.Graphics, Vcl.Imaging.pngimage,
   {$ELSE MSWINDOWS}
-  System.Types, Vcl.Compat,
+  System.Types,
   {$ENDIF MSWINDOWS}
   System.Classes;
 
@@ -305,7 +305,7 @@ begin
   try
     if Allure.fLifecycle<>nil then exit;
     Allure.fLifecycle := nil;
-    Allure.fDllHandle := Winapi.Windows.LoadLibrary({$IFDEF MSWINDOWS}'AllureDelphi.dll'{$ELSE}'libAllureDelphi.so'{$ENDIF});
+    Allure.fDllHandle := LoadLibrary({$IFDEF MSWINDOWS}'AllureDelphi.dll'{$ELSE}'libAllureDelphi.so'{$ENDIF});
     if Allure.fDllHandle<>0 then begin
       GetLifecycleFunc := GetProcAddress(Allure.fDllHandle, 'GetAllureLifecycle');
       if Assigned(GetLifecycleFunc) then begin

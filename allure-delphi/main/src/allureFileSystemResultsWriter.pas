@@ -3,7 +3,8 @@ unit allureFileSystemResultsWriter;
 interface
 
 uses
-  System.SysUtils, Winapi.Windows, allureDelphiInterface, allureCommon,
+  {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
+  System.SysUtils, allureDelphiInterface, allureCommon,
   System.Classes, allureDelphiHelper, allureModel, System.JSON.Builders,
   System.JSON.Types, System.JSON.Writers, System.IOUtils;
 
@@ -77,7 +78,7 @@ begin
   if (Source='') or (Attachment=nil) then exit;
   try
     ForceDirectories(fOutputDirectory);
-    fn := fOutputDirectory + '\' + Source;
+    fn := TPath.Combine(fOutputDirectory, Source);
     fs := TFileStream.Create(fn, fmCreate);
     try
       fs.CopyFrom(Attachment, Attachment.Size);
@@ -225,7 +226,7 @@ begin
   if TestResult=nil then exit;
   TAllureLinkHelper.UpdateLinks(TestResult.Links, fConfig.Links);
   ForceDirectories(fOutputDirectory);
-  fn := fOutputDirectory + '\' + TestResult.UUID + TEST_RESULT_FILE_SUFFIX;
+  fn := TPath.Combine(fOutputDirectory, TestResult.UUID + TEST_RESULT_FILE_SUFFIX);
   StreamWriter := TStreamWriter.Create(fn);
   Writer := TJsonTextWriter.Create(StreamWriter);
   Writer.Formatting := TJsonFormatting.Indented;
@@ -273,7 +274,7 @@ begin
   if TestResultContainer=nil then exit;
   TAllureLinkHelper.UpdateLinks(TestResultContainer.Links, fConfig.Links);
   ForceDirectories(fOutputDirectory);
-  fn := fOutputDirectory + '\' + TestResultContainer.UUID + TEST_RESULT_CONTAINER_FILE_SUFFIX;
+  fn := TPath.Combine(fOutputDirectory, TestResultContainer.UUID + TEST_RESULT_CONTAINER_FILE_SUFFIX);
   StreamWriter := TStreamWriter.Create(fn);
   Writer := TJsonTextWriter.Create(StreamWriter);
   Writer.Formatting := TJsonFormatting.Indented;

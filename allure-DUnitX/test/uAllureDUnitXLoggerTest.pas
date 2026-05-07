@@ -4,7 +4,7 @@ interface
 
 uses
   DUnitX.TestFramework, allureDelphiHelper, allureDelphiInterface,
-  System.SysUtils, allureAttributes{$IFDEF MSWINDOWS}, Winapi.ShellApi{$ENDIF};
+  System.SysUtils, System.IOUtils, allureAttributes{$IFDEF MSWINDOWS}, Winapi.ShellApi{$ENDIF};
 
 type
 
@@ -105,7 +105,7 @@ end;
 
 procedure TAllureDUnitXLoggerTests.ShouldAddAttachments;
 begin
-  Allure.AddAttachment('.\..\..\..\TestData\WeldingBox.png');
+  Allure.AddAttachment(TPath.Combine(['.', '..', '..', 'TestData', 'WeldingBox.png']));
   Allure.AddAttachmentText('Some text: ',
       'Just some long text' + #13#10 +
       'Just some long text' + #13#10 +
