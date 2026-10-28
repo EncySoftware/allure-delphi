@@ -305,7 +305,7 @@ begin
   try
     if Allure.fLifecycle<>nil then exit;
     Allure.fLifecycle := nil;
-    Allure.fDllHandle := LoadLibrary({$IFDEF MSWINDOWS}'AllureDelphi.dll'{$ELSE}'libAllureDelphi.so'{$ENDIF});
+    Allure.fDllHandle := LoadLibrary({$IF Defined(MSWINDOWS)}'AllureDelphi.dll'{$ELSEIF Defined(MACOS)}'libAllureDelphi.dylib'{$ELSE}'libAllureDelphi.so'{$ENDIF});
     if Allure.fDllHandle<>0 then begin
       GetLifecycleFunc := GetProcAddress(Allure.fDllHandle, 'GetAllureLifecycle');
       if Assigned(GetLifecycleFunc) then begin
