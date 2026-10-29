@@ -139,6 +139,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="src\allureDelphiInterface.pas"/>
+        <DCCReference Include="src\allureDelphiHelper.pas"/>
         <DCCReference Include="src\allureLifecycle.pas"/>
         <DCCReference Include="src\allureCommon.pas"/>
         <DCCReference Include="src\allureConfig.pas"/>

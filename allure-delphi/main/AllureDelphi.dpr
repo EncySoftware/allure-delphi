@@ -13,8 +13,8 @@
 uses
   System.SysUtils,
   System.Classes,
-  allureDelphiInterface,
-  allureDelphiHelper,
+  allureDelphiInterface in 'src\allureDelphiInterface.pas',
+  allureDelphiHelper in 'src\allureDelphiHelper.pas',
   allureLifecycle in 'src\allureLifecycle.pas',
   allureCommon in 'src\allureCommon.pas',
   allureConfig in 'src\allureConfig.pas',
